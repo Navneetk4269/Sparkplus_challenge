@@ -35,9 +35,10 @@ const HARDCODED_TASKS: Task[] = [
 interface TaskListProps {
   tasks?: Task[]
   countText?: string
+  onToggle?: (id: string | number) => void
 }
 
-export default function TaskList({ tasks, countText }: TaskListProps) {
+export default function TaskList({ tasks, countText, onToggle }: TaskListProps) {
   const list = tasks ?? HARDCODED_TASKS
   return (
     <div>
@@ -53,6 +54,8 @@ export default function TaskList({ tasks, countText }: TaskListProps) {
             title={task.title}
             description={task.description}
             priority={task.priority}
+            completed={task.completed}
+            onToggle={onToggle ? () => onToggle(task.id) : undefined}
           />
         ))}
       </section>
