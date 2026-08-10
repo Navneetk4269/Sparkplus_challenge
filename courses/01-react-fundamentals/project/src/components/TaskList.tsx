@@ -8,8 +8,7 @@ export interface Task {
   completed: boolean
 }
 
-export default function TaskList() {
-  const tasks: Task[] = [
+const HARDCODED_TASKS: Task[] = [
     {
       id: 1,
       title: 'Task One',
@@ -33,16 +32,30 @@ export default function TaskList() {
     },
   ]
 
+interface TaskListProps {
+  tasks?: Task[]
+  countText?: string
+}
+
+export default function TaskList({ tasks, countText }: TaskListProps) {
+  const list = tasks ?? HARDCODED_TASKS
   return (
-    <section id="task-list">
-      {tasks.map((task) => (
-        <TaskCard
-          key={task.id}
-          title={task.title}
-          description={task.description}
-          priority={task.priority}
-        />
-      ))}
-    </section>
+    <div>
+      {countText && (
+        <p id="task-count">
+          {countText}
+        </p>
+      )}
+      <section id="task-list">
+        {list.map((task) => (
+          <TaskCard
+            key={task.id}
+            title={task.title}
+            description={task.description}
+            priority={task.priority}
+          />
+        ))}
+      </section>
+    </div>
   )
 }

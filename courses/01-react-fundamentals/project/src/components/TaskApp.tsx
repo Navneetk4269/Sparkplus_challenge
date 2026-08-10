@@ -1,5 +1,6 @@
 import type { Dispatch, SetStateAction } from 'react'
 import type { Task } from './TaskList'
+import TaskList from './TaskList'
 
 interface TaskAppProps {
   tasks?: Task[]
@@ -11,8 +12,14 @@ interface TaskAppProps {
   showStatsPanel?: boolean
   onDelete?: (id: string | number) => void
   linkToTaskDetail?: boolean
+  countText?: string
 }
 
-export default function TaskApp(_props: TaskAppProps) {
-  return null
+export default function TaskApp(props: TaskAppProps) {
+  return (
+    <TaskList
+      tasks={props.tasks}
+      countText={props.tasks ? `${props.tasks.length} Tasks` : undefined}
+    />
+  )
 }
