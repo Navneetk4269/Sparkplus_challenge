@@ -21,6 +21,8 @@ interface TaskAppProps {
 export default function TaskApp(props: TaskAppProps) {
   const [filter, setFilter] = useState<'all' | 'active' | 'completed'>('all')
 
+  const [sortOrder, setSortOrder] = useState<'recent' | 'high-low' | 'low-high' | 'alphabetical'>('recent')
+
   function handleAddTask(task: Task){
     props.setTasks?.((prevTasks) => [...prevTasks, task])
   }
@@ -53,6 +55,38 @@ export default function TaskApp(props: TaskAppProps) {
     return true
   }) ?? []
 
+
+  const sortedTasks = [...filteredTasks]
+  if (sortOrder === 'high-low') {
+    const priority = {
+      High: 3,
+      Medium: 2,
+      Low: 1,
+    }
+
+    sortedTasks.sort(
+      (a, b) => priority[b.priority] - priority[a.priority]
+    )
+  }
+
+  if (sortOrder === 'low-high') {
+    const priority = {
+      High: 3,
+      Medium: 2,
+      Low: 1,
+    }
+
+    sortedTasks.sort(
+      (a, b) => priority[a.priority] - priority[b.priority]
+    )
+  }
+
+  if (sortOrder === 'alphabetical') {
+    sortedTasks.sort((a, b) =>
+      a.title.toLowerCase().localeCompare(b.title.toLowerCase())
+    )
+  }
+
   const displayCount =
   props.showFilterBar
     ? `Showing ${filteredTasks.length} of ${props.tasks?.length ?? 0} tasks`
@@ -64,16 +98,18 @@ export default function TaskApp(props: TaskAppProps) {
         <FilterBar
           filter={filter}
           onFilterChange={setFilter}
+          sortOrder={sortOrder}
+          onSortChange={setSortOrder}
         />
       )}
 
-      {props.showFilterBar && filteredTasks.length === 0 && (
+      {props.showFilterBar && sortedTasks.length === 0 && (
         <p id="filter-empty-message">
           No tasks match this filter
         </p>
       )}
       <TaskList
-        tasks={props.showFilterBar ? filteredTasks : props.tasks}
+        tasks={props.showFilterBar ? sortedTasks : props.tasks}
         countText={displayCount}
         onToggle={handleToggleTask}
         onDelete={props.onDelete}
