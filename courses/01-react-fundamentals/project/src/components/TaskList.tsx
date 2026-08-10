@@ -36,9 +36,10 @@ interface TaskListProps {
   tasks?: Task[]
   countText?: string
   onToggle?: (id: string | number) => void
+  onDelete?: (id: string | number) => void
 }
 
-export default function TaskList({ tasks, countText, onToggle }: TaskListProps) {
+export default function TaskList({ tasks, countText, onToggle, onDelete }: TaskListProps) {
   const list = tasks ?? HARDCODED_TASKS
   return (
     <div>
@@ -51,11 +52,13 @@ export default function TaskList({ tasks, countText, onToggle }: TaskListProps) 
         {list.map((task) => (
           <TaskCard
             key={task.id}
+            id={task.id}
             title={task.title}
             description={task.description}
             priority={task.priority}
             completed={task.completed}
             onToggle={onToggle ? () => onToggle(task.id) : undefined}
+            onDelete={onDelete}
           />
         ))}
       </section>
