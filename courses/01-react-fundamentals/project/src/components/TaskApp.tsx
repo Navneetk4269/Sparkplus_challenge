@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { Dispatch, SetStateAction } from 'react'
 import type { Task } from './TaskList'
 import FilterBar from './FilterBar'
@@ -26,6 +26,20 @@ export default function TaskApp(props: TaskAppProps) {
   const [editingId, setEditingId] = useState<string | number | null>(null)
 
   const [search, setSearch] = useState('')
+
+  const [debouncedSearch, setDebouncedSearch] = useState('')
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setDebouncedSearch(search)
+    }, 300)
+
+    return () => {
+      clearTimeout(timeout)
+    }
+  }, [search])
+
+  const isSearching = search !== debouncedSearch
 
   function handleAddTask(task: Task){
     props.setTasks?.((prevTasks) => [...prevTasks, task])
@@ -68,17 +82,26 @@ export default function TaskApp(props: TaskAppProps) {
     : `${props.tasks?.length ?? 0} Tasks`
 
   const filteredTasks =
-  props.tasks?.filter((task) => {
-    if (filter === 'active') {
-      return !task.completed
-    }
+    props.tasks?.filter((task) => {
+      if (filter === 'active' && task.completed) {
+        return false
+      }
 
-    if (filter === 'completed') {
-      return task.completed
-    }
+      if (filter === 'completed' && !task.completed) {
+        return false
+      }
 
-    return true
-  }) ?? []
+      if (debouncedSearch.trim()) {
+        const searchTerm = debouncedSearch.toLowerCase()
+
+        return (
+          task.title.toLowerCase().includes(searchTerm) ||
+          task.description.toLowerCase().includes(searchTerm)
+        )
+      }
+
+      return true
+    }) ?? []
 
   const searchedTasks = filteredTasks.filter((task) => {
     const query = search.trim().toLowerCase()
@@ -141,6 +164,10 @@ export default function TaskApp(props: TaskAppProps) {
           search={search}
           onSearchChange={setSearch}
         />
+      )}
+
+      {isSearching && search && (
+        <p id="searching-indicator">Searching...</p>
       )}
 
       {props.showFilterBar && sortedTasks.length === 0 && (
