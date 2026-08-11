@@ -23,6 +23,8 @@ export default function TaskApp(props: TaskAppProps) {
 
   const [sortOrder, setSortOrder] = useState<'recent' | 'high-low' | 'low-high' | 'alphabetical'>('recent')
 
+  const [editingId, setEditingId] = useState<string | number | null>(null)
+
   function handleAddTask(task: Task){
     props.setTasks?.((prevTasks) => [...prevTasks, task])
   }
@@ -35,6 +37,27 @@ export default function TaskApp(props: TaskAppProps) {
       )
     )
   }
+
+  function handleUpdateTask(
+    id: string | number,
+    updates: Pick<Task, 'title' | 'description' | 'priority'>
+  ) {
+    props.setTasks?.((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === id
+          ? { ...task, ...updates }
+          : task
+      )
+    )
+
+    setEditingId(null)
+  }
+
+  function handleCancelEdit() {
+    setEditingId(null)
+  }
+
+
   const completedCount =
   props.tasks?.filter((task) => task.completed).length ?? 0
 
@@ -113,6 +136,10 @@ export default function TaskApp(props: TaskAppProps) {
         countText={displayCount}
         onToggle={handleToggleTask}
         onDelete={props.onDelete}
+        editingId={editingId}
+        onUpdateTask={handleUpdateTask}
+        onEdit={setEditingId}
+        onCancelEdit={handleCancelEdit}
       />
     </>
   )
