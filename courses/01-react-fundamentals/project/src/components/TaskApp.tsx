@@ -25,6 +25,8 @@ export default function TaskApp(props: TaskAppProps) {
 
   const [editingId, setEditingId] = useState<string | number | null>(null)
 
+  const [search, setSearch] = useState('')
+
   function handleAddTask(task: Task){
     props.setTasks?.((prevTasks) => [...prevTasks, task])
   }
@@ -78,8 +80,21 @@ export default function TaskApp(props: TaskAppProps) {
     return true
   }) ?? []
 
+  const searchedTasks = filteredTasks.filter((task) => {
+    const query = search.trim().toLowerCase()
 
-  const sortedTasks = [...filteredTasks]
+    if (!query) {
+      return true
+    }
+
+    return (
+      task.title.toLowerCase().includes(query) ||
+      task.description.toLowerCase().includes(query)
+    )
+  })
+
+
+  const sortedTasks = [...searchedTasks]
   if (sortOrder === 'high-low') {
     const priority = {
       High: 3,
@@ -112,7 +127,7 @@ export default function TaskApp(props: TaskAppProps) {
 
   const displayCount =
   props.showFilterBar
-    ? `Showing ${filteredTasks.length} of ${props.tasks?.length ?? 0} tasks`
+    ? `Showing ${searchedTasks.length} of ${props.tasks?.length ?? 0} tasks`
     : countText
   return (
     <>
@@ -123,12 +138,14 @@ export default function TaskApp(props: TaskAppProps) {
           onFilterChange={setFilter}
           sortOrder={sortOrder}
           onSortChange={setSortOrder}
+          search={search}
+          onSearchChange={setSearch}
         />
       )}
 
       {props.showFilterBar && sortedTasks.length === 0 && (
         <p id="filter-empty-message">
-          No tasks match this filter
+          {search ? 'No tasks found' : 'No tasks match this filter'}
         </p>
       )}
       <TaskList
