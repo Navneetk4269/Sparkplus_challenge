@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from 'react'
 
 interface TaskCardProps {
   id: string | number
@@ -6,21 +6,27 @@ interface TaskCardProps {
   description: string
   priority: 'Low' | 'Medium' | 'High'
   completed: boolean
+
+  category?: string
+  tags?: string[]
+  dueDate?: string
+
   onToggle?: () => void
   onDelete?: (id: string | number) => void
+
   editing?: boolean
   onEdit?: () => void
   onCancelEdit?: () => void
+
   onUpdateTask?: (
     id: string | number,
     updates: {
       title: string
       description: string
       priority: 'Low' | 'Medium' | 'High'
+      dueDate?: string
     }
   ) => void
-  category?: string
-  tags?: string[]
 }
 
 export default function TaskCard({
@@ -29,18 +35,72 @@ export default function TaskCard({
   description,
   priority,
   completed,
+  category,
+  tags = [],
+  dueDate,
   onToggle,
   onDelete,
   editing,
   onEdit,
   onCancelEdit,
   onUpdateTask,
-  category,
-  tags = []
 }: TaskCardProps) {
   const [editTitle, setEditTitle] = useState(title)
-  const [editDescription, setEditDescription] = useState(description)
-  const [editPriority, setEditPriority] = useState<'Low' | 'Medium' | 'High'>(priority)
+  const [editDescription, setEditDescription] =
+    useState(description)
+
+  const [editPriority, setEditPriority] =
+    useState<'Low' | 'Medium' | 'High'>(priority)
+
+  const [editDueDate, setEditDueDate] =
+    useState(dueDate ?? '')
+
+  /*
+   * Keep edit fields synchronized with the current task.
+   */
+  useEffect(() => {
+    if (editing) {
+      setEditTitle(title)
+      setEditDescription(description)
+      setEditPriority(priority)
+      setEditDueDate(dueDate ?? '')
+    }
+  }, [
+    editing,
+    title,
+    description,
+    priority,
+    dueDate,
+  ])
+
+  /*
+   * Date calculations
+   */
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+
+  const due = dueDate
+    ? new Date(`${dueDate}T00:00:00`)
+    : null
+
+  const isOverdue =
+    !!due &&
+    !completed &&
+    due < today
+
+  const isDueToday =
+    !!due &&
+    due.getTime() === today.getTime()
+
+  const threeDaysFromNow = new Date(today)
+  threeDaysFromNow.setDate(
+    today.getDate() + 3
+  )
+
+  const isDueSoon =
+    !!due &&
+    due > today &&
+    due <= threeDaysFromNow
 
   function handleSave() {
     if (!editTitle.trim()) {
@@ -48,9 +108,10 @@ export default function TaskCard({
     }
 
     onUpdateTask?.(id, {
-      title: editTitle,
+      title: editTitle.trim(),
       description: editDescription,
       priority: editPriority,
+      dueDate: editDueDate || undefined,
     })
 
     onCancelEdit?.()
@@ -60,11 +121,17 @@ export default function TaskCard({
     setEditTitle(title)
     setEditDescription(description)
     setEditPriority(priority)
+    setEditDueDate(dueDate ?? '')
+
     onCancelEdit?.()
   }
 
   return (
-    <article id="task-card" data-completed={completed}>
+    <article
+      id="task-card"
+      data-completed={completed}
+      data-overdue={isOverdue ? 'true' : 'false'}
+    >
       {onToggle && (
         <input
           type="checkbox"
@@ -72,66 +139,155 @@ export default function TaskCard({
           onChange={onToggle}
         />
       )}
-      <h2 style={{ textDecoration: completed ? 'line-through' : 'none' }}>
+
+      <h2
+        style={{
+          textDecoration: completed
+            ? 'line-through'
+            : 'none',
+        }}
+      >
         {title}
       </h2>
-      <p>{description}</p>
-      <p>Priority: {priority}</p>
-      <p id="task-category">
-        Category: {category}
+
+      <p>
+        {description}
       </p>
+
+      <p>
+        Priority: {priority}
+      </p>
+
+      <p id="task-category">
+        Category: {category ?? 'General'}
+      </p>
+
       <div id="task-tags">
         {tags.map((tag) => (
-          <span key={tag} data-tag={tag}>
+          <span
+            key={tag}
+            data-tag={tag}
+          >
             {tag}
           </span>
         ))}
       </div>
+
+      {dueDate && (
+        <p
+          id="task-due-date"
+          data-overdue={
+            isOverdue ? 'true' : 'false'
+          }
+        >
+          Due:{' '}
+          {new Date(
+            `${dueDate}T00:00:00`
+          ).toLocaleDateString()}
+
+          {isOverdue && ' — Overdue'}
+
+          {!isOverdue &&
+            isDueToday &&
+            ' — Due Today'}
+
+          {!isOverdue &&
+            !isDueToday &&
+            isDueSoon &&
+            ' — Due Soon'}
+        </p>
+      )}
+
       {onDelete && (
         <button
           type="button"
           onClick={() => {
-            if (window.confirm('Are you sure?')) {
-              onDelete(id!)
+            if (
+              window.confirm(
+                'Are you sure?'
+              )
+            ) {
+              onDelete(id)
             }
           }}
         >
           Delete
         </button>
       )}
+
       {!editing && (
-        <button type="button" onClick={onEdit}>
+        <button
+          type="button"
+          onClick={onEdit}
+        >
           Edit
         </button>
       )}
+
       {editing && (
         <>
           <input
             value={editTitle}
-            onChange={(e) => setEditTitle(e.target.value)}
+            onChange={(e) =>
+              setEditTitle(e.target.value)
+            }
           />
 
           <textarea
             value={editDescription}
-            onChange={(e) => setEditDescription(e.target.value)}
+            onChange={(e) =>
+              setEditDescription(
+                e.target.value
+              )
+            }
           />
 
           <select
             value={editPriority}
             onChange={(e) =>
               setEditPriority(
-                e.target.value as 'Low' | 'Medium' | 'High'
+                e.target.value as
+                  | 'Low'
+                  | 'Medium'
+                  | 'High'
               )
             }
           >
-            <option value="Low">Low</option>
-            <option value="Medium">Medium</option>
-            <option value="High">High</option>
+            <option value="Low">
+              Low
+            </option>
+
+            <option value="Medium">
+              Medium
+            </option>
+
+            <option value="High">
+              High
+            </option>
           </select>
-          <button type="button" onClick={handleSave}>
+
+          <input
+            id="task-due-date"
+            type="date"
+            value={editDueDate}
+            onChange={(e) =>
+              setEditDueDate(
+                e.target.value
+              )
+            }
+          />
+
+          <button
+            type="button"
+            onClick={handleSave}
+          >
             Save
           </button>
-          <button type="button" onClick={handleCancel}>
+
+          <button
+            type="button"
+            onClick={handleCancel}
+          >
             Cancel
           </button>
         </>

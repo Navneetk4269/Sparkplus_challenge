@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react'
-import type { Dispatch, SetStateAction } from 'react'
+import type {
+  Dispatch,
+  SetStateAction,
+} from 'react'
+
 import type { Task } from './TaskList'
 import FilterBar from './FilterBar'
 import TaskList from './TaskList'
@@ -7,29 +11,74 @@ import TaskForm from './TaskForm'
 
 interface TaskAppProps {
   tasks?: Task[]
-  setTasks?: Dispatch<SetStateAction<Task[]>>
-  dispatch?: (action: { type: string; payload?: unknown }) => void
+  setTasks?: Dispatch<
+    SetStateAction<Task[]>
+  >
+
+  dispatch?: (
+    action: {
+      type: string
+      payload?: unknown
+    }
+  ) => void
+
   showForm?: boolean
   countFormat?: string
   showFilterBar?: boolean
   showStatsPanel?: boolean
-  onDelete?: (id: string | number) => void
+
+  onDelete?: (
+    id: string | number
+  ) => void
+
   linkToTaskDetail?: boolean
   countText?: string
 }
 
-export default function TaskApp(props: TaskAppProps) {
-  const [filter, setFilter] = useState<'all' | 'active' | 'completed'>('all')
+type SortOrder =
+  | 'recent'
+  | 'high-low'
+  | 'low-high'
+  | 'alphabetical'
+  | 'due-soonest'
 
-  const [sortOrder, setSortOrder] = useState<'recent' | 'high-low' | 'low-high' | 'alphabetical'>('recent')
+export default function TaskApp(
+  props: TaskAppProps
+) {
+  const [
+    filter,
+    setFilter,
+  ] = useState<
+    'all' | 'active' | 'completed'
+  >('all')
 
-  const [editingId, setEditingId] = useState<string | number | null>(null)
+  const [
+    sortOrder,
+    setSortOrder,
+  ] = useState<SortOrder>('recent')
 
-  const [search, setSearch] = useState('')
+  const [
+    editingId,
+    setEditingId,
+  ] = useState<
+    string | number | null
+  >(null)
 
-  const [debouncedSearch, setDebouncedSearch] = useState('')
+  const [
+    search,
+    setSearch,
+  ] = useState('')
 
-  const [category, setCategory] = useState('')
+  const [
+    debouncedSearch,
+    setDebouncedSearch,
+  ] = useState('')
+
+  const [
+    category,
+    setCategory,
+  ] = useState('')
+
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -41,31 +90,57 @@ export default function TaskApp(props: TaskAppProps) {
     }
   }, [search])
 
-  const isSearching = search !== debouncedSearch
+  const isSearching =
+    search !== debouncedSearch
 
-  function handleAddTask(task: Task){
-    props.setTasks?.((prevTasks) => [...prevTasks, task])
-  }
-  function handleToggleTask(id: string | number) {
-    props.setTasks?.((prevTasks) =>
-      prevTasks.map((task) =>
-        task.id === id
-          ? { ...task, completed: !task.completed }
-          : task
-      )
+
+  function handleAddTask(task: Task) {
+    props.setTasks?.(
+      (prevTasks) => [
+        ...prevTasks,
+        task,
+      ]
     )
   }
 
+  function handleToggleTask(
+    id: string | number
+  ) {
+    props.setTasks?.(
+      (prevTasks) =>
+        prevTasks.map((task) =>
+          task.id === id
+            ? {
+                ...task,
+                completed:
+                  !task.completed,
+              }
+            : task
+        )
+    )
+  }
+
+
   function handleUpdateTask(
     id: string | number,
-    updates: Pick<Task, 'title' | 'description' | 'priority'>
+    updates: Pick<
+      Task,
+      | 'title'
+      | 'description'
+      | 'priority'
+      | 'dueDate'
+    >
   ) {
-    props.setTasks?.((prevTasks) =>
-      prevTasks.map((task) =>
-        task.id === id
-          ? { ...task, ...updates }
-          : task
-      )
+    props.setTasks?.(
+      (prevTasks) =>
+        prevTasks.map((task) =>
+          task.id === id
+            ? {
+                ...task,
+                ...updates,
+              }
+            : task
+        )
     )
 
     setEditingId(null)
@@ -75,64 +150,87 @@ export default function TaskApp(props: TaskAppProps) {
     setEditingId(null)
   }
 
-
   const completedCount =
-  props.tasks?.filter((task) => task.completed).length ?? 0
+    props.tasks?.filter(
+      (task) =>
+        task.completed
+    ).length ?? 0
 
-  const countText = props.countFormat === 'completed'
-    ? `${completedCount} of ${props.tasks?.length ?? 0} completed`
-    : `${props.tasks?.length ?? 0} Tasks`
+  const countText =
+    props.countFormat ===
+    'completed'
+      ? `${completedCount} of ${
+          props.tasks?.length ?? 0
+        } completed`
+      : `${
+          props.tasks?.length ?? 0
+        } Tasks`
 
   const categories = [
-      ...new Set(
-        (props.tasks ?? [])
-          .map((task) => task.category)
-          .filter(Boolean)
-      ),
-    ]
+    ...new Set(
+      (props.tasks ?? [])
+        .map(
+          (task) =>
+            task.category
+        )
+        .filter(Boolean)
+    ),
+  ]
 
   const filteredTasks =
-  props.tasks?.filter((task) => {
-    if (filter === 'active' && task.completed) {
-      return false
-    }
+    props.tasks?.filter(
+      (task) => {
+        if (
+          filter === 'active' &&
+          task.completed
+        ) {
+          return false
+        }
 
-    if (filter === 'completed' && !task.completed) {
-      return false
-    }
+        if (
+          filter === 'completed' &&
+          !task.completed
+        ) {
+          return false
+        }
 
-    if (category && task.category !== category) {
-      return false
-    }
+        if (
+          category &&
+          task.category !== category
+        ) {
+          return false
+        }
 
-    if (debouncedSearch.trim()) {
-      const searchTerm = debouncedSearch.toLowerCase()
+        if (
+          debouncedSearch.trim()
+        ) {
+          const searchTerm =
+            debouncedSearch
+              .trim()
+              .toLowerCase()
 
-      return (
-        task.title.toLowerCase().includes(searchTerm) ||
-        task.description.toLowerCase().includes(searchTerm)
-      )
-    }
+          return (
+            task.title
+              .toLowerCase()
+              .includes(searchTerm) ||
+            task.description
+              .toLowerCase()
+              .includes(searchTerm)
+          )
+        }
 
-    return true
-  }) ?? []
+        return true
+      }
+    ) ?? []
 
-  const searchedTasks = filteredTasks.filter((task) => {
-    const query = search.trim().toLowerCase()
+  const sortedTasks = [
+    ...filteredTasks,
+  ]
 
-    if (!query) {
-      return true
-    }
-
-    return (
-      task.title.toLowerCase().includes(query) ||
-      task.description.toLowerCase().includes(query)
-    )
-  })
-
-
-  const sortedTasks = [...searchedTasks]
-  if (sortOrder === 'high-low') {
+  if (
+    sortOrder ===
+    'high-low'
+  ) {
     const priority = {
       High: 3,
       Medium: 2,
@@ -140,11 +238,16 @@ export default function TaskApp(props: TaskAppProps) {
     }
 
     sortedTasks.sort(
-      (a, b) => priority[b.priority] - priority[a.priority]
+      (a, b) =>
+        priority[b.priority] -
+        priority[a.priority]
     )
   }
 
-  if (sortOrder === 'low-high') {
+  if (
+    sortOrder ===
+    'low-high'
+  ) {
     const priority = {
       High: 3,
       Medium: 2,
@@ -152,55 +255,149 @@ export default function TaskApp(props: TaskAppProps) {
     }
 
     sortedTasks.sort(
-      (a, b) => priority[a.priority] - priority[b.priority]
+      (a, b) =>
+        priority[a.priority] -
+        priority[b.priority]
     )
   }
 
-  if (sortOrder === 'alphabetical') {
-    sortedTasks.sort((a, b) =>
-      a.title.toLowerCase().localeCompare(b.title.toLowerCase())
+  if (
+    sortOrder ===
+    'alphabetical'
+  ) {
+    sortedTasks.sort(
+      (a, b) =>
+        a.title
+          .toLowerCase()
+          .localeCompare(
+            b.title.toLowerCase()
+          )
+    )
+  }
+  if (
+    sortOrder ===
+    'due-soonest'
+  ) {
+    sortedTasks.sort(
+      (a, b) => {
+        if (
+          !a.dueDate &&
+          !b.dueDate
+        ) {
+          return 0
+        }
+
+        if (!a.dueDate) {
+          return 1
+        }
+
+        if (!b.dueDate) {
+          return -1
+        }
+
+        return (
+          new Date(
+            a.dueDate
+          ).getTime() -
+          new Date(
+            b.dueDate
+          ).getTime()
+        )
+      }
     )
   }
 
   const displayCount =
-  props.showFilterBar
-    ? `Showing ${searchedTasks.length} of ${props.tasks?.length ?? 0} tasks`
-    : countText
+    props.showFilterBar
+      ? `Showing ${
+          filteredTasks.length
+        } of ${
+          props.tasks?.length ?? 0
+        } tasks`
+      : countText
+
   return (
     <>
-      {props.showForm && <TaskForm onAddTask={handleAddTask} />}
-      {props.showFilterBar && (
-        <FilterBar
-          filter={filter}
-          onFilterChange={setFilter}
-          sortOrder={sortOrder}
-          onSortChange={setSortOrder}
-          search={search}
-          onSearchChange={setSearch}
-          categories={categories}
-          category={category}
-          onCategoryChange={setCategory}
+      {props.showForm && (
+        <TaskForm
+          onAddTask={
+            handleAddTask
+          }
         />
       )}
 
-      {isSearching && search && (
-        <p id="searching-indicator">Searching...</p>
+      {props.showFilterBar && (
+        <FilterBar
+          filter={filter}
+          onFilterChange={
+            setFilter
+          }
+          sortOrder={
+            sortOrder
+          }
+          onSortChange={
+            setSortOrder
+          }
+          search={search}
+          onSearchChange={
+            setSearch
+          }
+          categories={
+            categories
+          }
+          category={
+            category
+          }
+          onCategoryChange={
+            setCategory
+          }
+        />
       )}
 
-      {props.showFilterBar && sortedTasks.length === 0 && (
-        <p id="filter-empty-message">
-          {search ? 'No tasks found' : 'No tasks match this filter'}
-        </p>
-      )}
+      {isSearching &&
+        search && (
+          <p id="searching-indicator">
+            Searching...
+          </p>
+        )}
+
+      {props.showFilterBar &&
+        sortedTasks.length ===
+          0 && (
+          <p id="filter-empty-message">
+            {search
+              ? 'No tasks found'
+              : 'No tasks match this filter'}
+          </p>
+        )}
+
       <TaskList
-        tasks={props.showFilterBar ? sortedTasks : props.tasks}
-        countText={displayCount}
-        onToggle={handleToggleTask}
-        onDelete={props.onDelete}
-        editingId={editingId}
-        onUpdateTask={handleUpdateTask}
-        onEdit={setEditingId}
-        onCancelEdit={handleCancelEdit}
+        tasks={
+          props.showFilterBar
+            ? sortedTasks
+            : props.tasks
+        }
+        countText={
+          displayCount
+        }
+        onToggle={
+          handleToggleTask
+        }
+        onDelete={
+          props.onDelete
+        }
+        editingId={
+          editingId
+        }
+        onUpdateTask={
+          handleUpdateTask
+        }
+        onEdit={
+          setEditingId
+        }
+        onCancelEdit={
+          handleCancelEdit
+        }
       />
     </>
   )
