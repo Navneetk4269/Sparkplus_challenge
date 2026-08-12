@@ -8,6 +8,7 @@ import type { Task } from './TaskList'
 import FilterBar from './FilterBar'
 import TaskList from './TaskList'
 import TaskForm from './TaskForm'
+import StatsPanel from './StatsPanel'
 
 interface TaskAppProps {
   tasks?: Task[]
@@ -370,6 +371,10 @@ export default function TaskApp(
               : 'No tasks match this filter'}
           </p>
         )}
+
+      {props.showStatsPanel && (
+        <StatsPanel tasks={props.tasks ?? []} />
+      )}
 
       <TaskList
         tasks={
