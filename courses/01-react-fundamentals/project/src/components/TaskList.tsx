@@ -6,6 +6,8 @@ export interface Task {
   description: string
   priority: 'Low' | 'Medium' | 'High'
   completed: boolean
+  category?: string
+  tags?: string[]
 }
 
 const HARDCODED_TASKS: Task[] = [
@@ -15,6 +17,8 @@ const HARDCODED_TASKS: Task[] = [
       description: 'First hardcoded task',
       priority: 'High',
       completed: false,
+      category: 'Work',
+      tags: ['important', 'project'],
     },
     {
       id: 2,
@@ -22,6 +26,8 @@ const HARDCODED_TASKS: Task[] = [
       description: 'Second hardcoded task',
       priority: 'Medium',
       completed: false,
+      category: 'Personal',
+      tags: ['home'],
     },
     {
       id: 3,
@@ -29,6 +35,8 @@ const HARDCODED_TASKS: Task[] = [
       description: 'Third hardcoded task',
       priority: 'Low',
       completed: false,
+      category: 'General',
+      tags: [],
     },
   ]
 
@@ -70,6 +78,8 @@ export default function TaskList({
             title={task.title}
             description={task.description}
             priority={task.priority}
+            category={task.category}
+            tags={task.tags}
             completed={task.completed}
             onToggle={onToggle ? () => onToggle(task.id) : undefined}
             onDelete={onDelete}

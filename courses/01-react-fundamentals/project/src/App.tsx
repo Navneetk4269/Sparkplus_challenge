@@ -10,11 +10,51 @@ import { ThemeProvider } from './contexts/ThemeContext'
 import type { Task } from './components/TaskList'
 
 const INITIAL_TASKS: Task[] = [
-  { id: 1, title: 'First Task', description: 'Description one', priority: 'High', completed: false },
-  { id: 2, title: 'Second Task', description: 'Description two', priority: 'Medium', completed: false },
-  { id: 3, title: 'Third Task', description: 'Description three', priority: 'Low', completed: false },
-  { id: 4, title: 'Fourth Task', description: 'Description four', priority: 'Medium', completed: false },
-  { id: 5, title: 'Fifth Task', description: 'Description five', priority: 'High', completed: false },
+  {
+    id: 1,
+    title: 'First Task',
+    description: 'Description one',
+    priority: 'High',
+    completed: false,
+    category: 'Work',
+    tags: ['important'],
+  },
+  {
+    id: 2,
+    title: 'Second Task',
+    description: 'Description two',
+    priority: 'Medium',
+    completed: false,
+    category: 'Personal',
+    tags: ['home'],
+  },
+  {
+    id: 3,
+    title: 'Third Task',
+    description: 'Description three',
+    priority: 'Low',
+    completed: false,
+    category: 'General',
+    tags: [],
+  },
+  {
+    id: 4,
+    title: 'Fourth Task',
+    description: 'Description four',
+    priority: 'Medium',
+    completed: false,
+    category: 'Work',
+    tags: ['college'],
+  },
+  {
+    id: 5,
+    title: 'Fifth Task',
+    description: 'Description five',
+    priority: 'High',
+    completed: false,
+    category: 'Personal',
+    tags: ['important'],
+  },
 ]
 
 function AppContent() {
@@ -28,7 +68,13 @@ function AppContent() {
         const parsedTasks = JSON.parse(savedTasks)
 
         if (Array.isArray(parsedTasks)) {
-          setTasks(parsedTasks)
+          const normalizedTasks: Task[] = parsedTasks.map((task) => ({
+            ...task,
+            category: task.category ?? 'General',
+            tags: Array.isArray(task.tags) ? task.tags : [],
+          }))
+
+          setTasks(normalizedTasks)
         }
       } catch {
         

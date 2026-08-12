@@ -29,6 +29,8 @@ export default function TaskApp(props: TaskAppProps) {
 
   const [debouncedSearch, setDebouncedSearch] = useState('')
 
+  const [category, setCategory] = useState('')
+
   useEffect(() => {
     const timeout = setTimeout(() => {
       setDebouncedSearch(search)
@@ -81,27 +83,39 @@ export default function TaskApp(props: TaskAppProps) {
     ? `${completedCount} of ${props.tasks?.length ?? 0} completed`
     : `${props.tasks?.length ?? 0} Tasks`
 
+  const categories = [
+      ...new Set(
+        (props.tasks ?? [])
+          .map((task) => task.category)
+          .filter(Boolean)
+      ),
+    ]
+
   const filteredTasks =
-    props.tasks?.filter((task) => {
-      if (filter === 'active' && task.completed) {
-        return false
-      }
+  props.tasks?.filter((task) => {
+    if (filter === 'active' && task.completed) {
+      return false
+    }
 
-      if (filter === 'completed' && !task.completed) {
-        return false
-      }
+    if (filter === 'completed' && !task.completed) {
+      return false
+    }
 
-      if (debouncedSearch.trim()) {
-        const searchTerm = debouncedSearch.toLowerCase()
+    if (category && task.category !== category) {
+      return false
+    }
 
-        return (
-          task.title.toLowerCase().includes(searchTerm) ||
-          task.description.toLowerCase().includes(searchTerm)
-        )
-      }
+    if (debouncedSearch.trim()) {
+      const searchTerm = debouncedSearch.toLowerCase()
 
-      return true
-    }) ?? []
+      return (
+        task.title.toLowerCase().includes(searchTerm) ||
+        task.description.toLowerCase().includes(searchTerm)
+      )
+    }
+
+    return true
+  }) ?? []
 
   const searchedTasks = filteredTasks.filter((task) => {
     const query = search.trim().toLowerCase()
@@ -163,6 +177,9 @@ export default function TaskApp(props: TaskAppProps) {
           onSortChange={setSortOrder}
           search={search}
           onSearchChange={setSearch}
+          categories={categories}
+          category={category}
+          onCategoryChange={setCategory}
         />
       )}
 

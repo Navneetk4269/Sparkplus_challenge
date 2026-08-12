@@ -19,6 +19,8 @@ interface TaskCardProps {
       priority: 'Low' | 'Medium' | 'High'
     }
   ) => void
+  category?: string
+  tags?: string[]
 }
 
 export default function TaskCard({
@@ -32,7 +34,9 @@ export default function TaskCard({
   editing,
   onEdit,
   onCancelEdit,
-  onUpdateTask
+  onUpdateTask,
+  category,
+  tags = []
 }: TaskCardProps) {
   const [editTitle, setEditTitle] = useState(title)
   const [editDescription, setEditDescription] = useState(description)
@@ -73,6 +77,16 @@ export default function TaskCard({
       </h2>
       <p>{description}</p>
       <p>Priority: {priority}</p>
+      <p id="task-category">
+        Category: {category}
+      </p>
+      <div id="task-tags">
+        {tags.map((tag) => (
+          <span key={tag} data-tag={tag}>
+            {tag}
+          </span>
+        ))}
+      </div>
       {onDelete && (
         <button
           type="button"

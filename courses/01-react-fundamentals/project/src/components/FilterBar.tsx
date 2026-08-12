@@ -5,9 +5,14 @@ interface FilterBarProps {
   onSortChange: (sortOrder: 'recent' | 'high-low' | 'low-high' | 'alphabetical') => void
   search: string
   onSearchChange: (value: string) => void
+  categories: string[]
+  category: string
+  onCategoryChange: (category: string) => void
 }
 
-export default function FilterBar({ filter, onFilterChange, sortOrder, onSortChange, search, onSearchChange }: FilterBarProps) {
+export default function FilterBar({ filter, onFilterChange, sortOrder, 
+  onSortChange, search, onSearchChange, categories,
+  category, onCategoryChange }: FilterBarProps) {
   return <div id="filter-bar">
     <input
       type="text"
@@ -57,6 +62,19 @@ export default function FilterBar({ filter, onFilterChange, sortOrder, onSortCha
       <option value="high-low">Priority: High to Low</option>
       <option value="low-high">Priority: Low to High</option>
       <option value="alphabetical">Alphabetical</option>
+    </select>
+    <select
+      id="category-filter"
+      value={category}
+      onChange={(e) => onCategoryChange(e.target.value)}
+    >
+      <option value="">All categories</option>
+
+      {categories.map((category) => (
+        <option key={category} value={category}>
+          {category}
+        </option>
+      ))}
     </select>
   </div>
 }
