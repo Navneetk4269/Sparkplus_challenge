@@ -9,6 +9,7 @@ import FilterBar from './FilterBar'
 import TaskList from './TaskList'
 import TaskForm from './TaskForm'
 import StatsPanel from './StatsPanel'
+import { useTheme } from '../contexts/ThemeContext'
 
 interface TaskAppProps {
   tasks?: Task[]
@@ -46,39 +47,19 @@ type SortOrder =
 export default function TaskApp(
   props: TaskAppProps
 ) {
-  const [
-    filter,
-    setFilter,
-  ] = useState<
-    'all' | 'active' | 'completed'
-  >('all')
+  const [filter, setFilter,] = useState<'all' | 'active' | 'completed'>('all')
 
-  const [
-    sortOrder,
-    setSortOrder,
-  ] = useState<SortOrder>('recent')
+  const [sortOrder, setSortOrder,] = useState<SortOrder>('recent')
 
-  const [
-    editingId,
-    setEditingId,
-  ] = useState<
-    string | number | null
-  >(null)
+  const [editingId, setEditingId,] = useState<string | number | null>(null)
 
-  const [
-    search,
-    setSearch,
-  ] = useState('')
+  const [search, setSearch,] = useState('')
 
-  const [
-    debouncedSearch,
-    setDebouncedSearch,
-  ] = useState('')
+  const [debouncedSearch, setDebouncedSearch,] = useState('')
 
-  const [
-    category,
-    setCategory,
-  ] = useState('')
+  const [category, setCategory,] = useState('')
+
+  const { theme, toggleTheme } = useTheme()
 
 
   useEffect(() => {
@@ -319,6 +300,13 @@ export default function TaskApp(
 
   return (
     <>
+      <button
+        id="theme-toggle"
+        type="button"
+        onClick={toggleTheme}
+      >
+        {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
+      </button>
       {props.showForm && (
         <TaskForm
           onAddTask={
