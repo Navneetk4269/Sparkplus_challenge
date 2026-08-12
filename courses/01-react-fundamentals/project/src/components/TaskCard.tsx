@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import Badge from './Badge'
+import StatusIndicator from './StatusIndicator'
 
 interface TaskCardProps {
   id: string | number
@@ -55,9 +57,6 @@ export default function TaskCard({
   const [editDueDate, setEditDueDate] =
     useState(dueDate ?? '')
 
-  /*
-   * Keep edit fields synchronized with the current task.
-   */
   useEffect(() => {
     if (editing) {
       setEditTitle(title)
@@ -73,9 +72,6 @@ export default function TaskCard({
     dueDate,
   ])
 
-  /*
-   * Date calculations
-   */
   const today = new Date()
   today.setHours(0, 0, 0, 0)
 
@@ -155,20 +151,25 @@ export default function TaskCard({
       </p>
 
       <p>
-        Priority: {priority}
+        Priority:{' '}
+        <Badge variant={priority.toLowerCase()}>
+          {priority}
+        </Badge>
       </p>
 
       <p id="task-category">
-        Category: {category ?? 'General'}
+        Category:{' '}
+        <Badge variant="category">
+          {category}
+        </Badge>
       </p>
 
       <div id="task-tags">
         {tags.map((tag) => (
-          <span
-            key={tag}
-            data-tag={tag}
-          >
-            {tag}
+          <span key={tag} data-tag={tag}>
+            <Badge variant="tag">
+              {tag}
+            </Badge>
           </span>
         ))}
       </div>
@@ -176,25 +177,26 @@ export default function TaskCard({
       {dueDate && (
         <p
           id="task-due-date"
-          data-overdue={
-            isOverdue ? 'true' : 'false'
-          }
+          data-overdue={isOverdue ? 'true' : 'false'}
         >
           Due:{' '}
           {new Date(
             `${dueDate}T00:00:00`
           ).toLocaleDateString()}
 
-          {isOverdue && ' — Overdue'}
+          {isOverdue && (
+            <StatusIndicator status="overdue" />
+          )}
 
-          {!isOverdue &&
-            isDueToday &&
-            ' — Due Today'}
+          {!isOverdue && isDueToday && (
+            <StatusIndicator status="due-today" />
+          )}
 
           {!isOverdue &&
             !isDueToday &&
-            isDueSoon &&
-            ' — Due Soon'}
+            isDueSoon && (
+              <StatusIndicator status="due-soon" />
+            )}
         </p>
       )}
 

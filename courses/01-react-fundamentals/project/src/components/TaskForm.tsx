@@ -1,6 +1,8 @@
 import type { FormEvent } from 'react'
 import { useState } from 'react'
 import type { Task } from './TaskList'
+import Button from './Button'
+import FormInput from './FormInput'
 
 interface TaskFormProps {
   onAddTask: (task: Task) => void
@@ -55,29 +57,21 @@ export default function TaskForm({ onAddTask }: TaskFormProps) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor="task-title">
-        Title:
-      </label>
-
-      <input
+      <FormInput
+        label="Title :"
         id="task-title"
-        type="text"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
+        error={error}
       />
-
       <br />
 
-      <label htmlFor="task-description">
-        Description:
-      </label>
-
-      <input
+      <FormInput
+        label="Description :"
         id="task-description"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       />
-
       <br />
 
       <label htmlFor="task-priority">
@@ -149,9 +143,9 @@ export default function TaskForm({ onAddTask }: TaskFormProps) {
         </p>
       )}
 
-      <button type="submit">
+      <Button type="submit">
         Add Task
-      </button>
+      </Button>
     </form>
   )
 }
