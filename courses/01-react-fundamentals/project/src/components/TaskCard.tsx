@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import Badge from './Badge'
 import StatusIndicator from './StatusIndicator'
 
@@ -31,7 +31,7 @@ interface TaskCardProps {
   ) => void
 }
 
-export default function TaskCard({
+function TaskCard({
   id,
   title,
   description,
@@ -98,7 +98,7 @@ export default function TaskCard({
     due > today &&
     due <= threeDaysFromNow
 
-  function handleSave() {
+  const handleSave = useCallback(() => {
     if (!editTitle.trim()) {
       return
     }
@@ -111,16 +111,30 @@ export default function TaskCard({
     })
 
     onCancelEdit?.()
-  }
+  }, [
+    editTitle,
+    editDescription,
+    editPriority,
+    editDueDate,
+    id,
+    onUpdateTask,
+    onCancelEdit,
+  ])
 
-  function handleCancel() {
+  const handleCancel = useCallback(() => {
     setEditTitle(title)
     setEditDescription(description)
     setEditPriority(priority)
     setEditDueDate(dueDate ?? '')
 
     onCancelEdit?.()
-  }
+  }, [
+    title,
+    description,
+    priority,
+    dueDate,
+    onCancelEdit,
+  ])
 
   return (
     <article
@@ -297,3 +311,4 @@ export default function TaskCard({
     </article>
   )
 }
+export default React.memo(TaskCard)

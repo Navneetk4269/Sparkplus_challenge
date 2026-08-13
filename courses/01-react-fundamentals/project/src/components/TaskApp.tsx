@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback, useMemo} from 'react'
 import type {Dispatch} from 'react'
 import type { TaskAction } from '../reducers/taskReducer'
 import type { Task } from './TaskList'
@@ -64,53 +64,62 @@ export default function TaskApp(
     search !== debouncedSearch
 
 
-  function handleAddTask(task: Task) {
-    props.dispatch?.({
-      type: 'ADD_TASK',
-      payload: task,
-    })
-  }
+  const handleAddTask = useCallback(
+    (task: Task) => {
+      props.dispatch?.({
+        type: 'ADD_TASK',
+        payload: task,
+      })
+    },
+    [props.dispatch]
+  )
 
-  function handleToggleTask(
-    id: string | number
-  ) {
-    props.dispatch?.({
-      type: 'TOGGLE_TASK',
-      payload: id,
-    })
-  }
+  const handleToggleTask = useCallback(
+    (id: string | number) => {
+      props.dispatch?.({
+        type: 'TOGGLE_TASK',
+        payload: id,
+      })
+    },
+    [props.dispatch]
+  )
 
 
-  function handleUpdateTask(
-    id: string | number,
-    updates: Pick<
-      Task,
-      | 'title'
-      | 'description'
-      | 'priority'
-      | 'dueDate'
-    >
-  ) {
-    props.dispatch?.({
-      type: 'UPDATE_TASK',
-      payload: {
-        id,
-        ...updates,
-      },
-    })
+  const handleUpdateTask = useCallback(
+    (
+      id: string | number,
+      updates: Pick<
+        Task,
+        | 'title'
+        | 'description'
+        | 'priority'
+        | 'dueDate'
+      >
+    ) => {
+      props.dispatch?.({
+        type: 'UPDATE_TASK',
+        payload: {
+          id,
+          ...updates,
+        },
+      })
 
+      setEditingId(null)
+    },
+    [props.dispatch]
+  )
+
+  const handleCancelEdit = useCallback(() => {
     setEditingId(null)
-  }
+  }, [])
 
-  function handleCancelEdit() {
-    setEditingId(null)
-  }
-
-  const completedCount =
-    props.tasks?.filter(
-      (task) =>
-        task.completed
-    ).length ?? 0
+  const completedCount = useMemo(
+    () =>
+      props.tasks?.filter(
+        (task) => task.completed
+      ).length ?? 0,
+    [props.tasks]
+  )
 
   const countText =
     props.countFormat ===
@@ -122,20 +131,22 @@ export default function TaskApp(
           props.tasks?.length ?? 0
         } Tasks`
 
-  const categories = [
-    ...new Set(
-      (props.tasks ?? [])
-        .map(
-          (task) =>
-            task.category
-        )
-        .filter(Boolean)
-    ),
-  ]
+  const categories = useMemo(
+    () => [
+      ...new Set(
+        (props.tasks ?? [])
+          .map(
+            (task) => task.category
+          )
+          .filter(Boolean)
+      ),
+    ],
+    [props.tasks]
+  )
 
-  const filteredTasks =
-    props.tasks?.filter(
-      (task) => {
+  const sortedTasks = useMemo(() => {
+    const filteredTasks =
+      props.tasks?.filter((task) => {
         if (
           filter === 'active' &&
           task.completed
@@ -157,9 +168,7 @@ export default function TaskApp(
           return false
         }
 
-        if (
-          debouncedSearch.trim()
-        ) {
+        if (debouncedSearch.trim()) {
           const searchTerm =
             debouncedSearch
               .trim()
@@ -176,12 +185,85 @@ export default function TaskApp(
         }
 
         return true
-      }
-    ) ?? []
+      }) ?? []
 
-  const sortedTasks = [
-    ...filteredTasks,
-  ]
+    const result = [...filteredTasks]
+
+    if (sortOrder === 'high-low') {
+      const priority = {
+        High: 3,
+        Medium: 2,
+        Low: 1,
+      }
+
+      result.sort(
+        (a, b) =>
+          priority[b.priority] -
+          priority[a.priority]
+      )
+    }
+
+    if (sortOrder === 'low-high') {
+      const priority = {
+        High: 3,
+        Medium: 2,
+        Low: 1,
+      }
+
+      result.sort(
+        (a, b) =>
+          priority[a.priority] -
+          priority[b.priority]
+      )
+    }
+
+    if (sortOrder === 'alphabetical') {
+      result.sort(
+        (a, b) =>
+          a.title
+            .toLowerCase()
+            .localeCompare(
+              b.title.toLowerCase()
+            )
+      )
+    }
+
+    if (sortOrder === 'due-soonest') {
+      result.sort((a, b) => {
+        if (
+          !a.dueDate &&
+          !b.dueDate
+        ) {
+          return 0
+        }
+
+        if (!a.dueDate) {
+          return 1
+        }
+
+        if (!b.dueDate) {
+          return -1
+        }
+
+        return (
+          new Date(
+            a.dueDate
+          ).getTime() -
+          new Date(
+            b.dueDate
+          ).getTime()
+        )
+      })
+    }
+
+    return result
+  }, [
+    props.tasks,
+    filter,
+    category,
+    debouncedSearch,
+    sortOrder,
+  ])
 
   if (
     sortOrder ===
@@ -266,7 +348,7 @@ export default function TaskApp(
   const displayCount =
     props.showFilterBar
       ? `Showing ${
-          filteredTasks.length
+          sortedTasks.length
         } of ${
           props.tasks?.length ?? 0
         } tasks`

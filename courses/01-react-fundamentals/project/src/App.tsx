@@ -1,7 +1,7 @@
 import './App.css'
 import { useLocalStorage } from './hooks/useLocalStorage'
-import { useReducer, useEffect } from 'react'
-import {taskReducer, DELETE_TASK } from './reducers/taskReducer'
+import { useCallback, useReducer, useEffect } from 'react'
+import {taskReducer, DELETE_TASK} from './reducers/taskReducer'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import ChallengeList from './components/ChallengeList'
 import TaskList from './components/TaskList'
@@ -75,12 +75,15 @@ function AppContent() {
     setStoredTasks(tasks)
   }, [tasks, setStoredTasks])
 
-  const handleDelete = (id: string | number) => {
-    dispatch({
-      type: DELETE_TASK,
-      payload: id,
-    })
-  }
+  const handleDelete = useCallback(
+    (id: string | number) => {
+      dispatch({
+        type: DELETE_TASK,
+        payload: id,
+      })
+    },
+    []
+  )
 
   return (
     <BrowserRouter>
