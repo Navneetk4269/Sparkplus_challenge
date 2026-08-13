@@ -88,8 +88,7 @@ function AppContent() {
   return (
     <BrowserRouter>
       <div className="App">
-        <main>
-          <Routes>
+        <Routes>
             <Route path="/" element={<ChallengeList />} />
             <Route path="/challenge/01-static-task-display" element={<TaskList />} />
             <Route path="/challenge/02-dynamic-task-rendering" element={<TaskApp tasks={tasks} dispatch={dispatch} showForm={false} countFormat="tasks" />} />
@@ -116,7 +115,6 @@ function AppContent() {
             <Route path="/challenge/22-data-fetching" element={<FetchDemoView />} />
             <Route path="/challenge/23-useref-focus-management" element={<TaskApp tasks={tasks} dispatch={dispatch} showForm countFormat="tasks" showFilterBar />} />
           </Routes>
-        </main>
       </div>
     </BrowserRouter>
   )

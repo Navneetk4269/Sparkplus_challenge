@@ -3,34 +3,28 @@ import { useState } from 'react'
 export function useLocalStorage<T>(
   key: string,
   initialValue: T
-): [
-  T,
-  (value: T | ((prev: T) => T)) => void
-] {
+): [T, (value: T | ((prev: T) => T)) => void] {
   const [value, setValue] = useState<T>(() => {
     try {
-      const savedValue =
-        localStorage.getItem(key)
+      const storedValue = localStorage.getItem(key)
 
-      if (savedValue === null) {
+      if (storedValue === null) {
         return initialValue
       }
 
-      return JSON.parse(savedValue) as T
+      return JSON.parse(storedValue) as T
     } catch {
       return initialValue
     }
   })
 
-  function setStoredValue(
+  const setStoredValue = (
     newValue: T | ((prev: T) => T)
-  ) {
-    setValue((prevValue) => {
+  ) => {
+    setValue((prev) => {
       const valueToStore =
         typeof newValue === 'function'
-          ? (newValue as (prev: T) => T)(
-              prevValue
-            )
+          ? (newValue as (prev: T) => T)(prev)
           : newValue
 
       try {
@@ -39,6 +33,7 @@ export function useLocalStorage<T>(
           JSON.stringify(valueToStore)
         )
       } catch {
+        // Ignore localStorage write errors.
       }
 
       return valueToStore

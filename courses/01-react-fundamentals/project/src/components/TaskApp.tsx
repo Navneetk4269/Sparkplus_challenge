@@ -7,6 +7,7 @@ import TaskList from './TaskList'
 import TaskForm from './TaskForm'
 import StatsPanel from './StatsPanel'
 import { useTheme } from '../contexts/ThemeContext'
+import ErrorBoundary from './ErrorBoundary'
 
 interface TaskAppProps {
   tasks?: Task[]
@@ -265,86 +266,6 @@ export default function TaskApp(
     sortOrder,
   ])
 
-  if (
-    sortOrder ===
-    'high-low'
-  ) {
-    const priority = {
-      High: 3,
-      Medium: 2,
-      Low: 1,
-    }
-
-    sortedTasks.sort(
-      (a, b) =>
-        priority[b.priority] -
-        priority[a.priority]
-    )
-  }
-
-  if (
-    sortOrder ===
-    'low-high'
-  ) {
-    const priority = {
-      High: 3,
-      Medium: 2,
-      Low: 1,
-    }
-
-    sortedTasks.sort(
-      (a, b) =>
-        priority[a.priority] -
-        priority[b.priority]
-    )
-  }
-
-  if (
-    sortOrder ===
-    'alphabetical'
-  ) {
-    sortedTasks.sort(
-      (a, b) =>
-        a.title
-          .toLowerCase()
-          .localeCompare(
-            b.title.toLowerCase()
-          )
-    )
-  }
-  if (
-    sortOrder ===
-    'due-soonest'
-  ) {
-    sortedTasks.sort(
-      (a, b) => {
-        if (
-          !a.dueDate &&
-          !b.dueDate
-        ) {
-          return 0
-        }
-
-        if (!a.dueDate) {
-          return 1
-        }
-
-        if (!b.dueDate) {
-          return -1
-        }
-
-        return (
-          new Date(
-            a.dueDate
-          ).getTime() -
-          new Date(
-            b.dueDate
-          ).getTime()
-        )
-      }
-    )
-  }
-
   const displayCount =
     props.showFilterBar
       ? `Showing ${
@@ -420,34 +341,22 @@ export default function TaskApp(
         <StatsPanel tasks={props.tasks ?? []} />
       )}
 
-      <TaskList
-        tasks={
-          props.showFilterBar
-            ? sortedTasks
-            : props.tasks
-        }
-        countText={
-          displayCount
-        }
-        onToggle={
-          handleToggleTask
-        }
-        onDelete={
-          props.onDelete
-        }
-        editingId={
-          editingId
-        }
-        onUpdateTask={
-          handleUpdateTask
-        }
-        onEdit={
-          setEditingId
-        }
-        onCancelEdit={
-          handleCancelEdit
-        }
-      />
+      <ErrorBoundary>
+        <TaskList
+          tasks={
+            props.showFilterBar
+              ? sortedTasks
+              : props.tasks
+          }
+          countText={displayCount}
+          onToggle={handleToggleTask}
+          onDelete={props.onDelete}
+          editingId={editingId}
+          onUpdateTask={handleUpdateTask}
+          onEdit={setEditingId}
+          onCancelEdit={handleCancelEdit}
+        />
+      </ErrorBoundary>
     </>
   )
 }
