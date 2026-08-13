@@ -39,7 +39,6 @@ export function useLocalStorage<T>(
           JSON.stringify(valueToStore)
         )
       } catch {
-        // Ignore localStorage write errors
       }
 
       return valueToStore

@@ -1,9 +1,6 @@
 import { useEffect, useState } from 'react'
-import type {
-  Dispatch,
-  SetStateAction,
-} from 'react'
-
+import type {Dispatch} from 'react'
+import type { TaskAction } from '../reducers/taskReducer'
 import type { Task } from './TaskList'
 import FilterBar from './FilterBar'
 import TaskList from './TaskList'
@@ -13,16 +10,7 @@ import { useTheme } from '../contexts/ThemeContext'
 
 interface TaskAppProps {
   tasks?: Task[]
-  setTasks?: Dispatch<
-    SetStateAction<Task[]>
-  >
-
-  dispatch?: (
-    action: {
-      type: string
-      payload?: unknown
-    }
-  ) => void
+  dispatch?: Dispatch<TaskAction>
 
   showForm?: boolean
   countFormat?: string
@@ -77,29 +65,19 @@ export default function TaskApp(
 
 
   function handleAddTask(task: Task) {
-    props.setTasks?.(
-      (prevTasks) => [
-        ...prevTasks,
-        task,
-      ]
-    )
+    props.dispatch?.({
+      type: 'ADD_TASK',
+      payload: task,
+    })
   }
 
   function handleToggleTask(
     id: string | number
   ) {
-    props.setTasks?.(
-      (prevTasks) =>
-        prevTasks.map((task) =>
-          task.id === id
-            ? {
-                ...task,
-                completed:
-                  !task.completed,
-              }
-            : task
-        )
-    )
+    props.dispatch?.({
+      type: 'TOGGLE_TASK',
+      payload: id,
+    })
   }
 
 
@@ -113,17 +91,13 @@ export default function TaskApp(
       | 'dueDate'
     >
   ) {
-    props.setTasks?.(
-      (prevTasks) =>
-        prevTasks.map((task) =>
-          task.id === id
-            ? {
-                ...task,
-                ...updates,
-              }
-            : task
-        )
-    )
+    props.dispatch?.({
+      type: 'UPDATE_TASK',
+      payload: {
+        id,
+        ...updates,
+      },
+    })
 
     setEditingId(null)
   }
