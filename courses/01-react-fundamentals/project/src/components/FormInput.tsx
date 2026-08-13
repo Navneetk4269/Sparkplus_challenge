@@ -1,3 +1,5 @@
+import { forwardRef } from 'react'
+
 interface FormInputProps {
   label?: string
   id: string
@@ -10,36 +12,44 @@ interface FormInputProps {
   error?: string
 }
 
-export default function FormInput({
-  label,
-  id,
-  value,
-  onChange,
-  type = 'text',
-  placeholder,
-  error,
-}: FormInputProps) {
-  return (
-    <div>
-      {label && (
-        <label htmlFor={id}>
-          {label}
-        </label>
-      )}
+const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
+  function FormInput(
+    {
+      label,
+      id,
+      value,
+      onChange,
+      type = 'text',
+      placeholder,
+      error,
+    },
+    ref
+  ) {
+    return (
+      <div>
+        {label && (
+          <label htmlFor={id}>
+            {label}
+          </label>
+        )}
 
-      <input
-        id={id}
-        type={type}
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-      />
+        <input
+          ref={ref}
+          id={id}
+          type={type}
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+        />
 
-      {error && (
-        <p id={`${id}-error`}>
-          {error}
-        </p>
-      )}
-    </div>
-  )
-}
+        {error && (
+          <p id={`${id}-error`}>
+            {error}
+          </p>
+        )}
+      </div>
+    )
+  }
+)
+
+export default FormInput
