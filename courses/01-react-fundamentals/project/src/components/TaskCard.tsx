@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import Badge from './Badge'
 import StatusIndicator from './StatusIndicator'
+import { Link } from 'react-router-dom'
 
 interface TaskCardProps {
   id: string | number
@@ -29,6 +30,7 @@ interface TaskCardProps {
       dueDate?: string
     }
   ) => void
+  linkToTaskDetail?: boolean
 }
 
 function TaskCard({
@@ -46,6 +48,7 @@ function TaskCard({
   onEdit,
   onCancelEdit,
   onUpdateTask,
+  linkToTaskDetail,
 }: TaskCardProps) {
   const [editTitle, setEditTitle] = useState(title)
   const [editDescription, setEditDescription] =
@@ -157,7 +160,15 @@ function TaskCard({
             : 'none',
         }}
       >
-        {title}
+        {linkToTaskDetail ? (
+          <Link
+            to={`/challenge/21-react-router/task/${id}`}
+          >
+            {title}
+          </Link>
+        ) : (
+          title
+        )}
       </h2>
 
       <p>

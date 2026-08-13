@@ -355,6 +355,7 @@ export default function TaskApp(
           onUpdateTask={handleUpdateTask}
           onEdit={setEditingId}
           onCancelEdit={handleCancelEdit}
+          linkToTaskDetail={props.linkToTaskDetail}
         />
       </ErrorBoundary>
     </>

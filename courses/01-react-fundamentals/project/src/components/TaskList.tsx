@@ -60,6 +60,7 @@ interface TaskListProps {
   editingId?: string | number | null
   onEdit?: (id: string | number) => void
   onCancelEdit?: () => void
+  linkToTaskDetail?: boolean
 }
 
 export default function TaskList({
@@ -71,6 +72,7 @@ export default function TaskList({
   editingId,
   onEdit,
   onCancelEdit,
+  linkToTaskDetail,
 }: TaskListProps) {
   const list = tasks ?? HARDCODED_TASKS
 
@@ -104,6 +106,7 @@ export default function TaskList({
             editing={editingId === task.id}
             onEdit={() => onEdit?.(task.id)}
             onCancelEdit={onCancelEdit}
+            linkToTaskDetail={linkToTaskDetail}
           />
         ))}
       </section>
