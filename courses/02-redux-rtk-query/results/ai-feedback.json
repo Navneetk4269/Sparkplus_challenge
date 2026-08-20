@@ -1,1 +1,18 @@
-[]
+[
+  {
+    "challengeId": "01-store-setup",
+    "challengeName": "Store Setup with configureStore",
+    "aiReview": {
+      "challengeId": "01-store-setup",
+      "timestamp": "2026-08-20T08:44:13.095Z",
+      "score": 0,
+      "feedback": [],
+      "strengths": [],
+      "improvements": [],
+      "readability": 0,
+      "maintainability": 0,
+      "overall": "",
+      "error": "GROQ_API_KEY environment variable not set. AI review skipped."
+    }
+  }
+]
