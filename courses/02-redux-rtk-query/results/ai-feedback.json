@@ -82,5 +82,29 @@
       "overall": "The implementation satisfies all functional requirements: the store is configured with Redux Toolkit, the Provider is correctly set up, and the necessary types are exported. While the code is clean and well‑typed, a few unused artifacts and redundant middleware configuration could be removed to improve maintainability.",
       "requirementCompliance": 95
     }
+  },
+  {
+    "challengeId": "05-async-thunks",
+    "challengeName": "Async Logic with createAsyncThunk",
+    "aiReview": {
+      "challengeId": "05-async-thunks",
+      "timestamp": "2026-08-20T12:05:21.550Z",
+      "score": 88,
+      "feedback": [],
+      "strengths": [
+        "Clear separation of concerns: the async logic lives in `usersSlice.ts` while the store configuration is isolated in `store.ts`.",
+        "Proper use of `createAsyncThunk` and `extraReducers` to handle pending/fulfilled/rejected states.",
+        "TypeScript types are defined for the user entity and slice state, improving type safety."
+      ],
+      "improvements": [
+        "In `usersSlice.ts`, the rejected case handler receives an `action` whose type is inferred as `any`. Explicitly type it as `RejectedAction<unknown, string, string>` or use `action.error.message` safely to avoid potential runtime errors.",
+        "The `hooks.ts` file is currently unused and contains an incorrect `reduxHooksConfig`. Either remove the file or implement a proper typed hook wrapper (`useAppDispatch`, `useAppSelector`) that returns the correct types without the `withTypes` syntax, which is not part of the official Redux Toolkit API.",
+        "Add JSDoc comments or inline comments to explain the purpose of the thunk and the state shape, especially for future maintainers who might extend the slice with more actions or selectors."
+      ],
+      "readability": 85,
+      "maintainability": 80,
+      "overall": "The implementation satisfies all functional requirements: it fetches users via a thunk, updates the slice with loading/error handling, and integrates the reducer into the store. While the code is readable and maintainable, the unused hooks file and lack of explicit typing in the rejected case are minor issues that can be addressed to improve robustness.",
+      "requirementCompliance": 95
+    }
   }
 ]
