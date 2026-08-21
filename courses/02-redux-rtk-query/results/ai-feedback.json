@@ -216,5 +216,29 @@
       "overall": "",
       "requirementCompliance": 0
     }
+  },
+  {
+    "challengeId": "11-api-local-state",
+    "challengeName": "API and Local State Together",
+    "aiReview": {
+      "challengeId": "11-api-local-state",
+      "timestamp": "2026-08-21T11:46:13.701Z",
+      "score": 0,
+      "feedback": [],
+      "strengths": [
+        "Clear separation of concerns: API logic lives in `apiSlice`, UI state in `filtersSlice`, and the component in `PostsWithFilters.tsx`.\",",
+        "TypeScript is used consistently – the `SortBy` union and `FiltersState` interface make the slice strongly typed.\",",
+        "The component follows the required pattern: it uses `useGetPostsQuery` for server state and `useAppSelector` for local filter state, then derives a sorted list.\",",
+        "Data‑testids are correctly applied (`posts-with-filters` and `filter-controls`) for testability.",
+        "improvements\": ["
+      ],
+      "improvements": [
+        "Replace the non‑standard `useDispatch.withTypes` / `use"
+      ],
+      "readability": 0,
+      "maintainability": 0,
+      "overall": "```json\n{\n  \"readability\": 85,\n  \"maintainability\": 80,\n  \"strengths\": [\n    \"Clear separation of concerns: API logic lives in `apiSlice`, UI state in `filtersSlice`, and the component in `PostsWithFilters.tsx`.\",\n    \"TypeScript is used consistently – the `SortBy` union and `FiltersState` interface make the slice strongly typed.\",\n    \"The component follows the required pattern: it uses `useGetPostsQuery` for server state and `useAppSelector` for local filter state, then derives a sorted list.\"",
+      "requirementCompliance": 0
+    }
   }
 ]
