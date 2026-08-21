@@ -240,5 +240,21 @@
       "overall": "```json\n{\n  \"readability\": 85,\n  \"maintainability\": 80,\n  \"strengths\": [\n    \"Clear separation of concerns: API logic lives in `apiSlice`, UI state in `filtersSlice`, and the component in `PostsWithFilters.tsx`.\",\n    \"TypeScript is used consistently – the `SortBy` union and `FiltersState` interface make the slice strongly typed.\",\n    \"The component follows the required pattern: it uses `useGetPostsQuery` for server state and `useAppSelector` for local filter state, then derives a sorted list.\"",
       "requirementCompliance": 0
     }
+  },
+  {
+    "challengeId": "12-error-loading-ux",
+    "challengeName": "Error and Loading UX",
+    "aiReview": {
+      "challengeId": "12-error-loading-ux",
+      "timestamp": "2026-08-21T11:51:14.399Z",
+      "score": 0,
+      "feedback": [],
+      "strengths": [],
+      "improvements": [],
+      "readability": 0,
+      "maintainability": 0,
+      "overall": "",
+      "requirementCompliance": 0
+    }
   }
 ]
