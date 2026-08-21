@@ -3599,5 +3599,290 @@
       "overall": "",
       "requirementCompliance": 0
     }
+  },
+  {
+    "challengeId": "13-query-parameters",
+    "challengeName": "Query with Parameters and Detail View",
+    "timestamp": "2026-08-21T11:56:17.598Z",
+    "scores": {
+      "functionalTests": 100,
+      "codeQuality": 100,
+      "architecture": 100,
+      "bestPractices": 100,
+      "e2eTests": 100,
+      "aiReview": 0
+    },
+    "totalScore": 85,
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "testResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 3,
+      "passedTests": 3,
+      "failedTests": 0,
+      "details": [
+        {
+          "assertionResults": [
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 13: Query with Parameters and Detail View"
+              ],
+              "fullName": " Challenge 13: Query with Parameters and Detail View API slice has getPostById query endpoint",
+              "status": "passed",
+              "title": "API slice has getPostById query endpoint",
+              "duration": 2,
+              "failureMessages": []
+            },
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 13: Query with Parameters and Detail View"
+              ],
+              "fullName": " Challenge 13: Query with Parameters and Detail View PostDetail uses useGetPostByIdQuery or generated query hook",
+              "status": "passed",
+              "title": "PostDetail uses useGetPostByIdQuery or generated query hook",
+              "duration": 0,
+              "failureMessages": []
+            },
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 13: Query with Parameters and Detail View"
+              ],
+              "fullName": " Challenge 13: Query with Parameters and Detail View PostDetail has post-detail data-testid",
+              "status": "passed",
+              "title": "PostDetail has post-detail data-testid",
+              "duration": 0,
+              "failureMessages": []
+            }
+          ],
+          "startTime": 1787313380094,
+          "endTime": 1787313380096,
+          "status": "passed",
+          "message": "",
+          "name": "C:/Users/navne/OneDrive/Desktop/Sparkplus/challenge-engine-react/courses/02-redux-rtk-query/project/tests/challenge-13.test.tsx"
+        }
+      ]
+    },
+    "lintResults": {
+      "score": 100,
+      "passed": true,
+      "totalIssues": 0,
+      "errors": 0,
+      "warnings": 0,
+      "details": [
+        {
+          "filePath": "C:\\Users\\navne\\OneDrive\\Desktop\\Sparkplus\\challenge-engine-react\\courses\\02-redux-rtk-query\\project\\src\\api\\apiSlice.ts",
+          "messages": [],
+          "suppressedMessages": [],
+          "errorCount": 0,
+          "fatalErrorCount": 0,
+          "warningCount": 0,
+          "fixableErrorCount": 0,
+          "fixableWarningCount": 0,
+          "usedDeprecatedRules": [
+            {
+              "ruleId": "no-extra-semi",
+              "replacedBy": []
+            },
+            {
+              "ruleId": "no-mixed-spaces-and-tabs",
+              "replacedBy": []
+            }
+          ]
+        },
+        {
+          "filePath": "C:\\Users\\navne\\OneDrive\\Desktop\\Sparkplus\\challenge-engine-react\\courses\\02-redux-rtk-query\\project\\src\\components\\PostDetail.tsx",
+          "messages": [],
+          "suppressedMessages": [],
+          "errorCount": 0,
+          "fatalErrorCount": 0,
+          "warningCount": 0,
+          "fixableErrorCount": 0,
+          "fixableWarningCount": 0,
+          "usedDeprecatedRules": [
+            {
+              "ruleId": "no-extra-semi",
+              "replacedBy": []
+            },
+            {
+              "ruleId": "no-mixed-spaces-and-tabs",
+              "replacedBy": []
+            }
+          ]
+        }
+      ]
+    },
+    "architectureResults": {
+      "score": 100,
+      "passed": true,
+      "patternsFound": [],
+      "patternsMissing": [],
+      "details": [
+        {
+          "file": "src/api/apiSlice.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "src/components/PostDetail.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        }
+      ]
+    },
+    "bestPracticesResults": {
+      "score": 100,
+      "passed": true,
+      "issues": [],
+      "details": [],
+      "note": "No best practices requirements specified in challenge"
+    },
+    "e2eResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 2,
+      "passedTests": 2,
+      "failedTests": 0,
+      "details": [
+        {
+          "title": "challenge-13.spec.ts",
+          "file": "challenge-13.spec.ts",
+          "column": 0,
+          "line": 0,
+          "specs": [],
+          "suites": [
+            {
+              "title": "Challenge 13: Query with Parameters - E2E",
+              "file": "challenge-13.spec.ts",
+              "line": 3,
+              "column": 6,
+              "specs": [
+                {
+                  "title": "should load challenge 13 page with content",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 314,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-21T11:56:27.066Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "b108b4dbebb7686e0d0c-62f94784cfb44da7d5be",
+                  "file": "challenge-13.spec.ts",
+                  "line": 8,
+                  "column": 3
+                },
+                {
+                  "title": "should show post detail area",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 250,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-21T11:56:27.486Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "b108b4dbebb7686e0d0c-8dc240493b76fcf57221",
+                  "file": "challenge-13.spec.ts",
+                  "line": 13,
+                  "column": 3
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "screenshots": []
+    },
+    "aiReviewResults": {
+      "challengeId": "13-query-parameters",
+      "timestamp": "2026-08-21T11:56:28.066Z",
+      "score": 0,
+      "feedback": [],
+      "strengths": [
+        "Implemented a parameterized query (`getPostById`) and the corresponding hook (`useGetPostByIdQuery`).\",",
+        "Proper use of the `skip` option to avoid firing the query when no ID is supplied.\",",
+        "Clear separation of concerns: API logic lives in `apiSlice.ts`, UI in `PostDetail.tsx`, and mock data in `mockServer.ts`.\",",
+        "Consistent use of TypeScript types for API responses and component props.\",",
+        "Comprehensive error and loading handling with dedicated `data-testid` attributes for testing."
+      ],
+      "improvements": [
+        "Unify the `Post` type definition: `apiSlice.ts` defines `Post` without `userId`, while `mockServer.ts` defines a `Post` that includes `userId`. This mismatch causes a TypeScript error. Create a single shared interface (e.g., in a `types.ts` file) and import it in both places.\",",
+        "Implement the `getPosts` endpoint to actually fetch data from `mockApi.getPosts()` instead of returning an empty array. The current placeholder makes the endpoint unusable and can confuse future developers.\",",
+        "Replace the dummy `baseQuery` (`async () => ({ data: null })`) with `fetchBaseQuery({ baseUrl: '/' })` or a custom base query that forwards to the mock server. This aligns with RTK Query best practices and ensures that future endpoints can rely on a real base query.\",",
+        "Add a route for the detail view in the main application (e.g., `/challenge/13-query-parameters/:postId`) and use `useParams` in `PostDetail` to extract the ID. Currently the component accepts an optional prop, but the challenge explicitly requires rendering the component on a route that supplies the ID.\",",
+        "Remove the redundant `getPosts` query or mark it as a TODO if it is intentionally left incomplete. Leaving unused code can lead to confusion.\","
+      ],
+      "readability": 0,
+      "maintainability": 0,
+      "overall": "```json\n{\n  \"readability\": 85,\n  \"maintainability\": 70,\n  \"strengths\": [\n    \"Implemented a parameterized query (`getPostById`) and the corresponding hook (`useGetPostByIdQuery`).\",\n    \"Proper use of the `skip` option to avoid firing the query when no ID is supplied.\",\n    \"Clear separation of concerns: API logic lives in `apiSlice.ts`, UI in `PostDetail.tsx`, and mock data in `mockServer.ts`.\",\n    \"Consistent use of TypeScript types for API responses and component props.\",\n    \"Comprehensive ",
+      "requirementCompliance": 0
+    },
+    "aiResults": {
+      "challengeId": "13-query-parameters",
+      "timestamp": "2026-08-21T11:56:28.066Z",
+      "score": 0,
+      "feedback": [],
+      "strengths": [
+        "Implemented a parameterized query (`getPostById`) and the corresponding hook (`useGetPostByIdQuery`).\",",
+        "Proper use of the `skip` option to avoid firing the query when no ID is supplied.\",",
+        "Clear separation of concerns: API logic lives in `apiSlice.ts`, UI in `PostDetail.tsx`, and mock data in `mockServer.ts`.\",",
+        "Consistent use of TypeScript types for API responses and component props.\",",
+        "Comprehensive error and loading handling with dedicated `data-testid` attributes for testing."
+      ],
+      "improvements": [
+        "Unify the `Post` type definition: `apiSlice.ts` defines `Post` without `userId`, while `mockServer.ts` defines a `Post` that includes `userId`. This mismatch causes a TypeScript error. Create a single shared interface (e.g., in a `types.ts` file) and import it in both places.\",",
+        "Implement the `getPosts` endpoint to actually fetch data from `mockApi.getPosts()` instead of returning an empty array. The current placeholder makes the endpoint unusable and can confuse future developers.\",",
+        "Replace the dummy `baseQuery` (`async () => ({ data: null })`) with `fetchBaseQuery({ baseUrl: '/' })` or a custom base query that forwards to the mock server. This aligns with RTK Query best practices and ensures that future endpoints can rely on a real base query.\",",
+        "Add a route for the detail view in the main application (e.g., `/challenge/13-query-parameters/:postId`) and use `useParams` in `PostDetail` to extract the ID. Currently the component accepts an optional prop, but the challenge explicitly requires rendering the component on a route that supplies the ID.\",",
+        "Remove the redundant `getPosts` query or mark it as a TODO if it is intentionally left incomplete. Leaving unused code can lead to confusion.\","
+      ],
+      "readability": 0,
+      "maintainability": 0,
+      "overall": "```json\n{\n  \"readability\": 85,\n  \"maintainability\": 70,\n  \"strengths\": [\n    \"Implemented a parameterized query (`getPostById`) and the corresponding hook (`useGetPostByIdQuery`).\",\n    \"Proper use of the `skip` option to avoid firing the query when no ID is supplied.\",\n    \"Clear separation of concerns: API logic lives in `apiSlice.ts`, UI in `PostDetail.tsx`, and mock data in `mockServer.ts`.\",\n    \"Consistent use of TypeScript types for API responses and component props.\",\n    \"Comprehensive ",
+      "requirementCompliance": 0
+    }
   }
 ]

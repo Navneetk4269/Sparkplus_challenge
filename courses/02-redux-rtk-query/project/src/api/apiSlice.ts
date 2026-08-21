@@ -121,6 +121,30 @@ export const apiSlice = createApi({
         }
       },
     }),
+
+    getPostById: builder.query<Post, number>({
+      queryFn: async (id) => {
+        try {
+          const data = await mockApi.getPostById(id)
+
+          return { data }
+        } catch (error) {
+          return {
+            error: {
+              status: 'CUSTOM_ERROR',
+              error:
+                error instanceof Error
+                  ? error.message
+                  : 'Failed to fetch post',
+            },
+          }
+        }
+      },
+
+      providesTags: (result, error, id) => [
+        { type: 'Post', id },
+      ],
+    }),
   }),
 })
 
@@ -128,4 +152,5 @@ export const {
   useGetUsersQuery,
   useGetPostsQuery,
   useAddPostMutation,
+  useGetPostByIdQuery,
 } = apiSlice
