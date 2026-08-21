@@ -130,5 +130,21 @@
       "overall": "```json\n{\n  \"readability\": 85,\n  \"maintainability\": 80,\n  \"strengths\": [\n    \"Implemented RTK Query with `createApi` and a custom `baseQuery` that delegates to the mock API via `queryFn`.\",\n    \"Properly added the API slice’s reducer and middleware to the Redux store, enabling RTK Query to function across the app.\",\n    \"Used TypeScript throughout, defining interfaces for users and posts in the mock server and exporting typed hooks (`useGetUsersQuery`).\"\n  ],\n  \"improvements\": [\n    \"Replace the",
       "requirementCompliance": 0
     }
+  },
+  {
+    "challengeId": "07-queries",
+    "challengeName": "Query Endpoints and useQuery Hooks",
+    "aiReview": {
+      "challengeId": "07-queries",
+      "timestamp": "2026-08-21T11:10:22.160Z",
+      "score": 0,
+      "feedback": [],
+      "strengths": [],
+      "improvements": [],
+      "readability": 0,
+      "maintainability": 0,
+      "overall": "",
+      "requirementCompliance": 0
+    }
   }
 ]
