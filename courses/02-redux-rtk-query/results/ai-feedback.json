@@ -176,5 +176,29 @@
       "overall": "The implementation demonstrates a solid grasp of RTK Query’s tag system, correctly defining tag types and applying `providesTags` and `invalidatesTags`. However, the mutation invalidation targets the wrong tag and the API slice lacks a proper base query and reducer integration, which limits its effectiveness in a real application. Addressing these issues will bring the code fully in line with the challenge requirements and RTK Query best practices.",
       "requirementCompliance": 80
     }
+  },
+  {
+    "challengeId": "09-mutations",
+    "challengeName": "Mutations with useMutation",
+    "aiReview": {
+      "challengeId": "09-mutations",
+      "timestamp": "2026-08-21T11:36:50.840Z",
+      "score": 80,
+      "feedback": [],
+      "strengths": [
+        "Clear separation between API slice and UI component – the `apiSlice` and `AddPostForm` are in distinct files.",
+        "Proper use of `useAddPostMutation` with loading, success and error states, and disabling the submit button during mutation.",
+        "All required `data-testid` attributes are present, making the component test‑friendly."
+      ],
+      "improvements": [
+        "Integrate the mock API for the mutation: replace the inline `queryFn` that generates a fake ID with `mockApi.createPost` so the new post actually appears in the mock data store and can be fetched by a future `getPosts` query.",
+        "Add a `getPosts` query that provides tags (`{ type: 'Post', id: 'LIST' }`) so that the `addPost` mutation’s `invalidatesTags` actually triggers a refetch of the posts list.",
+        "Switch from `queryFn` to the standard `query` field (or `fetchBaseQuery`) for consistency and to allow RTK Query to automatically handle caching, error handling, and request deduplication."
+      ],
+      "readability": 85,
+      "maintainability": 80,
+      "overall": "The implementation demonstrates the core concepts of RTK Query mutations and the `useMutation` hook, and it satisfies the UI and test‑id requirements. However, the mutation currently does not persist data via the mock API, and the list invalidation has no effect because no `getPosts` query exists. Adding those pieces would bring the solution fully in line with the challenge’s expectations and best practices.",
+      "requirementCompliance": 75
+    }
   }
 ]

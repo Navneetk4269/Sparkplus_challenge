@@ -14,6 +14,7 @@ export const apiSlice = createApi({
       queryFn: async () => {
         try {
           const data = await mockApi.getUsers()
+
           return { data }
         } catch (error) {
           return {
@@ -41,11 +42,28 @@ export const apiSlice = createApi({
     }),
 
     addPost: builder.mutation({
-      queryFn: async () => {
-        return { data: null }
+      queryFn: async (body) => {
+        try {
+          return {
+            data: {
+              id: Date.now(),
+              ...body,
+            },
+          }
+        } catch (error) {
+          return {
+            error: {
+              status: 'CUSTOM_ERROR',
+              error:
+                error instanceof Error
+                  ? error.message
+                  : 'Failed to add post',
+            },
+          }
+        }
       },
 
-      invalidatesTags: [{ type: 'User', id: 'LIST' }],
+      invalidatesTags: [{ type: 'Post', id: 'LIST' }],
     }),
   }),
 })
