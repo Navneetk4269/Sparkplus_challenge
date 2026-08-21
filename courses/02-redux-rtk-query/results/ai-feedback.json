@@ -146,5 +146,35 @@
       "overall": "",
       "requirementCompliance": 0
     }
+  },
+  {
+    "challengeId": "08-caching-refetch",
+    "challengeName": "Caching and Cache Tags",
+    "aiReview": {
+      "challengeId": "08-caching-refetch",
+      "timestamp": "2026-08-21T11:21:22.928Z",
+      "score": 79,
+      "feedback": [],
+      "strengths": [
+        "Tag types are correctly declared in `createApi` (`['User', 'Post']`).",
+        "The `getUsers` query implements `providesTags` using a concise mapping of result IDs.",
+        "The `addPost` mutation includes an `invalidatesTags` array, showing awareness of cache invalidation.",
+        "TypeScript types are used consistently in the mock server and API slice.",
+        "Hooks (`useGetUsersQuery`, `useAddPostMutation`) are exported for easy consumption."
+      ],
+      "improvements": [
+        "The `invalidatesTags` on `addPost` should target the `Post` tag, not `User`. Change to `[{ type: 'Post', id: 'LIST' }]`.",
+        "Add `providesTags` to the `getPosts` query (and any other data queries) so that mutations affecting posts can trigger refetches.",
+        "Replace the ad‑hoc `baseQuery` with `fetchBaseQuery` or a proper `baseQuery` that uses `mockApi` to keep the API slice consistent with RTK Query conventions.",
+        "Remove the unused `baseQuery` implementation (`async () => ({ data: null })`) to avoid confusion.",
+        "Consider adding `queryFn` for `getPosts` and other endpoints to keep the API slice DRY and easier to extend.",
+        "Integrate the `apiSlice.reducer` into the Redux store (not shown here) and add the middleware `apiSlice.middleware` to enable caching and refetching.",
+        "Add error and loading state handling in components that consume these hooks to provide a complete user experience."
+      ],
+      "readability": 80,
+      "maintainability": 75,
+      "overall": "The implementation demonstrates a solid grasp of RTK Query’s tag system, correctly defining tag types and applying `providesTags` and `invalidatesTags`. However, the mutation invalidation targets the wrong tag and the API slice lacks a proper base query and reducer integration, which limits its effectiveness in a real application. Addressing these issues will bring the code fully in line with the challenge requirements and RTK Query best practices.",
+      "requirementCompliance": 80
+    }
   }
 ]
