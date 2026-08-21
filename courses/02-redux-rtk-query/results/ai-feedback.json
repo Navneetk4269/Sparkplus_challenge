@@ -200,5 +200,21 @@
       "overall": "The implementation demonstrates the core concepts of RTK Query mutations and the `useMutation` hook, and it satisfies the UI and test‑id requirements. However, the mutation currently does not persist data via the mock API, and the list invalidation has no effect because no `getPosts` query exists. Adding those pieces would bring the solution fully in line with the challenge’s expectations and best practices.",
       "requirementCompliance": 75
     }
+  },
+  {
+    "challengeId": "10-optimistic-updates",
+    "challengeName": "Optimistic Updates",
+    "aiReview": {
+      "challengeId": "10-optimistic-updates",
+      "timestamp": "2026-08-21T11:40:18.953Z",
+      "score": 0,
+      "feedback": [],
+      "strengths": [],
+      "improvements": [],
+      "readability": 0,
+      "maintainability": 0,
+      "overall": "",
+      "requirementCompliance": 0
+    }
   }
 ]
