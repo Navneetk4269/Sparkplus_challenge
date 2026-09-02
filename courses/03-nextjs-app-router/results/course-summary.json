@@ -1,11 +1,11 @@
 {
   "courseId": "03-nextjs-app-router",
   "courseName": "Next.js App Router",
-  "lastUpdated": "2026-09-02T08:23:05.883Z",
+  "lastUpdated": "2026-09-02T08:37:27.918Z",
   "totalChallenges": 17,
-  "completedChallenges": 1,
-  "averageScore": 84.2,
-  "completionPercentage": 5.9,
+  "completedChallenges": 2,
+  "averageScore": 84.6,
+  "completionPercentage": 11.8,
   "badgeLevel": "none",
   "challengeResults": [
     {
@@ -13,10 +13,17 @@
       "challengeName": "App Router, Pages, and Layout",
       "score": 84.17,
       "passed": true
+    },
+    {
+      "challengeId": "02-server-and-client-components",
+      "challengeName": "Server and Client Components",
+      "score": 85,
+      "passed": true
     }
   ],
   "skillStrengths": [
-    "App Router, Pages, and Layout"
+    "App Router, Pages, and Layout",
+    "Server and Client Components"
   ],
   "improvementAreas": []
 }

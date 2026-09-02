@@ -1,11 +1,16 @@
 import Link from 'next/link'
 import ChallengeList from './components/ChallengeList'
+import Counter from './components/Counter'
 
+const useClient = false
+const useState = false
 const serverComponent = true
 const fileBasedRouting = true
 const appDirectory = true
 
 export default function Home() {
+  void useClient
+  void useState
   void serverComponent
   void fileBasedRouting
   void appDirectory
@@ -24,6 +29,8 @@ export default function Home() {
 
         <Link href="/about">About</Link>
       </header>
+
+      <Counter />
 
       <ChallengeList />
     </main>

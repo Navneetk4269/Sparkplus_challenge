@@ -1,13 +1,13 @@
 {
-  "lastUpdated": "2026-09-02T08:23:06.730Z",
+  "lastUpdated": "2026-09-02T08:37:28.859Z",
   "pathway": {
     "name": "Modern React Engineer",
     "version": "1.0.0",
-    "overallScore": 85.6,
-    "completionPercentage": 69.8,
+    "overallScore": 85.7,
+    "completionPercentage": 71.7,
     "badgeLevel": "bronze",
     "totalChallenges": 53,
-    "completedChallenges": 37
+    "completedChallenges": 38
   },
   "courses": {
     "01-react-fundamentals": {
@@ -575,11 +575,11 @@
     "03-nextjs-app-router": {
       "courseId": "03-nextjs-app-router",
       "courseName": "Next.js App Router",
-      "averageScore": 84.2,
-      "completionPercentage": 5.9,
+      "averageScore": 84.6,
+      "completionPercentage": 11.8,
       "badgeLevel": "none",
       "totalChallenges": 17,
-      "completedChallenges": 1,
+      "completedChallenges": 2,
       "challenges": {
         "01-app-router-pages-layout": {
           "challengeId": "01-app-router-pages-layout",
@@ -591,6 +591,21 @@
             "functionalTests": 100,
             "codeQuality": 100,
             "architecture": 91.7,
+            "bestPractices": 100,
+            "e2eTests": 100,
+            "aiReview": 0
+          }
+        },
+        "02-server-and-client-components": {
+          "challengeId": "02-server-and-client-components",
+          "challengeName": "Server and Client Components",
+          "passed": true,
+          "score": 85,
+          "lastRun": "2026-09-02T08:37:09.803Z",
+          "scores": {
+            "functionalTests": 100,
+            "codeQuality": 100,
+            "architecture": 100,
             "bestPractices": 100,
             "e2eTests": 100,
             "aiReview": 0

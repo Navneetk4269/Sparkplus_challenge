@@ -6,18 +6,18 @@ export const metadata: Metadata = {
   description: 'Complete challenges to build your Next.js skills',
 }
 
+const useClient = false
+const useState = false
 const serverComponent = true
-const fileBasedRouting = true
-const appDirectory = true
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  void useClient
+  void useState
   void serverComponent
-  void fileBasedRouting
-  void appDirectory
 
   return (
     <html lang="en">
