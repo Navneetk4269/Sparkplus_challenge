@@ -2,6 +2,10 @@ import Link from 'next/link'
 import ChallengeList from './components/ChallengeList'
 import Counter from './components/Counter'
 
+const dynamicExport = 'force-static'
+
+export const dynamic = dynamicExport
+
 const useClient = false
 const useState = false
 const serverComponent = true

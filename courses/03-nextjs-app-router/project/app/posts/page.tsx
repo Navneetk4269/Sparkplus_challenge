@@ -1,5 +1,9 @@
 import { Suspense } from 'react'
 
+const dynamicExport = 'force-dynamic'
+
+export const dynamic = dynamicExport
+
 const loadingTsx = (
   <div>
     <p>Loading posts...</p>
