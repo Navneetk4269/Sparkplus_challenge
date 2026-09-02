@@ -1262,5 +1262,195 @@
       "overall": "",
       "error": "Groq API error (404): The model `llama-3.1-8b-instant` does not exist or you do not have access to it."
     }
+  },
+  {
+    "challengeId": "06-dynamic-routes",
+    "challengeName": "Dynamic Routes",
+    "timestamp": "2026-09-02T17:49:39.428Z",
+    "scores": {
+      "functionalTests": 100,
+      "codeQuality": 100,
+      "architecture": 50,
+      "bestPractices": 100,
+      "e2eTests": 100,
+      "aiReview": 0
+    },
+    "totalScore": 80,
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "testResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 2,
+      "passedTests": 2,
+      "failedTests": 0,
+      "details": [
+        {
+          "assertionResults": [
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 06: Dynamic Routes"
+              ],
+              "fullName": " Challenge 06: Dynamic Routes should have dynamic route segment [id] or [slug]",
+              "status": "passed",
+              "title": "should have dynamic route segment [id] or [slug]",
+              "duration": 6,
+              "failureMessages": []
+            },
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 06: Dynamic Routes"
+              ],
+              "fullName": " Challenge 06: Dynamic Routes should use params in page component",
+              "status": "passed",
+              "title": "should use params in page component",
+              "duration": 2,
+              "failureMessages": []
+            }
+          ],
+          "startTime": 1788371386259,
+          "endTime": 1788371386267,
+          "status": "passed",
+          "message": "",
+          "name": "C:/Users/navne/OneDrive/Desktop/Sparkplus/challenge-engine-react/courses/03-nextjs-app-router/project/tests/challenge-06.test.tsx"
+        }
+      ]
+    },
+    "lintResults": {
+      "score": 100,
+      "passed": true,
+      "totalIssues": 0,
+      "errors": 0,
+      "warnings": 0,
+      "details": [
+        {
+          "filePath": "C:\\Users\\navne\\OneDrive\\Desktop\\Sparkplus\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\app\\posts\\[id]\\page.tsx",
+          "messages": [],
+          "suppressedMessages": [],
+          "errorCount": 0,
+          "fatalErrorCount": 0,
+          "warningCount": 0,
+          "fixableErrorCount": 0,
+          "fixableWarningCount": 0,
+          "usedDeprecatedRules": []
+        }
+      ]
+    },
+    "architectureResults": {
+      "score": 50,
+      "passed": false,
+      "patternsFound": [
+        "params"
+      ],
+      "patternsMissing": [
+        "dynamicSegment"
+      ],
+      "details": [
+        {
+          "file": "app/posts/[id]/page.tsx",
+          "patternsFound": [
+            "params"
+          ],
+          "patternsMissing": [
+            "dynamicSegment"
+          ]
+        }
+      ]
+    },
+    "bestPracticesResults": {
+      "score": 100,
+      "passed": true,
+      "issues": [],
+      "details": [],
+      "note": "No best practices requirements specified in challenge"
+    },
+    "e2eResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "details": [
+        {
+          "title": "challenge-06.spec.ts",
+          "file": "challenge-06.spec.ts",
+          "column": 0,
+          "line": 0,
+          "specs": [],
+          "suites": [
+            {
+              "title": "Challenge 06: Dynamic Routes - E2E",
+              "file": "challenge-06.spec.ts",
+              "line": 7,
+              "column": 6,
+              "specs": [
+                {
+                  "title": "should load dynamic post page",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 12887,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-09-02T17:52:00.460Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "fdfd0a4bbce1fa4a4eed-5080986329fc0070668f",
+                  "file": "challenge-06.spec.ts",
+                  "line": 8,
+                  "column": 7
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "screenshots": []
+    },
+    "aiReviewResults": {
+      "challengeId": "06-dynamic-routes",
+      "timestamp": "2026-09-02T17:52:18.585Z",
+      "score": 0,
+      "feedback": [],
+      "strengths": [],
+      "improvements": [],
+      "readability": 0,
+      "maintainability": 0,
+      "overall": "",
+      "error": "Groq API error (404): The model `llama-3.1-8b-instant` does not exist or you do not have access to it."
+    },
+    "aiResults": {
+      "challengeId": "06-dynamic-routes",
+      "timestamp": "2026-09-02T17:52:18.585Z",
+      "score": 0,
+      "feedback": [],
+      "strengths": [],
+      "improvements": [],
+      "readability": 0,
+      "maintainability": 0,
+      "overall": "",
+      "error": "Groq API error (404): The model `llama-3.1-8b-instant` does not exist or you do not have access to it."
+    }
   }
 ]
