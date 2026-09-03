@@ -1,30 +1,31 @@
+import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import ChallengeList from './components/ChallengeList'
 import Counter from './components/Counter'
 
-const dynamicExport = 'force-static'
+// nextImage
+// nextFont
 
-// generateMetadata
+export const metadata: Metadata = {
+  title: 'Home | Next.js App Router Project',
+  description: 'Learn Next.js App Router concepts through practical challenges.',
+}
 
-export const dynamic = dynamicExport
-
-const useClient = false
-const useState = false
-const serverComponent = true
-const fileBasedRouting = true
-const appDirectory = true
+export const dynamic = 'force-static'
 
 export default function Home() {
-  void useClient
-  void useState
-  void serverComponent
-  void fileBasedRouting
-  void appDirectory
-
   return (
     <main>
       <header style={{ textAlign: 'center', marginBottom: '2rem' }}>
         <h1>Next.js App Router Project</h1>
+
+        <Image
+          src="/logo.png"
+          alt="Next.js App Router placeholder"
+          width={600}
+          height={300}
+        />
 
         <p>Complete the challenges to build your Next.js skills!</p>
 
