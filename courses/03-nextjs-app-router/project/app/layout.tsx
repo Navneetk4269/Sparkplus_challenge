@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import './globals.css'
 
+// generateMetadata
+
 export const metadata: Metadata = {
   title: 'Next.js App Router Project',
   description: 'Complete challenges to build your Next.js skills',

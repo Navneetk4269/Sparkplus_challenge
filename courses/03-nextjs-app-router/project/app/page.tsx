@@ -4,6 +4,8 @@ import Counter from './components/Counter'
 
 const dynamicExport = 'force-static'
 
+// generateMetadata
+
 export const dynamic = dynamicExport
 
 const useClient = false

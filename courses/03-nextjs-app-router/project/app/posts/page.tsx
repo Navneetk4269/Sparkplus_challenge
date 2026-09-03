@@ -5,6 +5,7 @@ import AddPostForm from '../components/AddPostForm'
 // useServer
 // revalidateTag
 // revalidatePath
+// generateMetadata
 
 export const dynamic = 'force-dynamic'
 
