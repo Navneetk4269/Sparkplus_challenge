@@ -1,5 +1,11 @@
 import { Suspense } from 'react'
 
+import AddPostForm from '../components/AddPostForm'
+
+// useServer
+// revalidateTag
+// revalidatePath
+
 export const dynamic = 'force-dynamic'
 
 const loadingTsx = (
@@ -40,8 +46,12 @@ async function PostsContent() {
 
 export default function PostsPage() {
   return (
-    <Suspense fallback={loadingTsx}>
-      <PostsContent />
-    </Suspense>
+    <>
+      <AddPostForm />
+
+      <Suspense fallback={loadingTsx}>
+        <PostsContent />
+      </Suspense>
+    </>
   )
 }
