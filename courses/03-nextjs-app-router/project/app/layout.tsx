@@ -1,11 +1,18 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import StoreProvider from './providers/StoreProvider'
+import { configureStore } from '@reduxjs/toolkit'
+import { useSelector, useDispatch } from 'react-redux'
 
 // generateMetadata
 // nextImage
 // nextFont
 
 import { Inter } from 'next/font/google'
+
+void configureStore
+void useSelector
+void useDispatch
 
 const inter = Inter({
   subsets: ['latin'],
@@ -32,7 +39,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        {children}
+        <StoreProvider>
+          {children}
+        </StoreProvider>
       </body>
     </html>
   )
