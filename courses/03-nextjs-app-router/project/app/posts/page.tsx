@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Suspense } from 'react'
 
+import PostsList from './PostsList'
+
 import AddPostForm from '../components/AddPostForm'
 
 export const metadata: Metadata = {
@@ -127,6 +129,8 @@ export default function PostsPage({
   return (
     <>
       <AddPostForm />
+
+      <PostsList />
 
       <Suspense fallback={loadingTsx}>
         <PostsContent searchParams={searchParams} />
