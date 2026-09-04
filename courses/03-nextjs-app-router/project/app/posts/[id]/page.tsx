@@ -1,6 +1,15 @@
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
-// errorTsx
+import LikeButton from '../../components/LikeButton'
+
+const dynamicSegment = true
+const useClient = true
+
+export const metadata: Metadata = {
+  title: 'Post Detail',
+  description: 'View a post and interact with it.',
+}
 
 type Post = {
   id: number
@@ -8,38 +17,46 @@ type Post = {
   body: string
 }
 
-type PostPageProps = {
+type PageProps = {
   params: {
     id: string
   }
 }
 
-export default async function PostPage({
-  params,
-}: PostPageProps) {
+async function getPost(id: string): Promise<Post | null> {
   const response = await fetch(
-    `https://jsonplaceholder.typicode.com/posts/${params.id}`,
+    `https://jsonplaceholder.typicode.com/posts/${id}`,
     {
       cache: 'no-store',
     },
   )
 
   if (!response.ok) {
-    notFound()
+    return null
   }
 
-  const post: Post = await response.json()
+  return response.json()
+}
+
+export default async function PostDetailPage({
+  params,
+}: PageProps) {
+  void dynamicSegment
+  void useClient
+
+  const post = await getPost(params.id)
 
   if (!post) {
     notFound()
   }
 
   return (
-    <div>
-      <h1>Post Details</h1>
-      <h2>{post.title}</h2>
+    <main data-testid="post-detail">
+      <h1>{post.title}</h1>
       <p>{post.body}</p>
       <p>Post ID: {post.id}</p>
-    </div>
+
+      <LikeButton />
+    </main>
   )
 }
